@@ -296,9 +296,8 @@ def test_loading_weights_by_name_skip_mismatch():
 
     x = np.random.random((1, 3))
     y = np.random.random((1, 3))
-    model.train_on_batch(x, y)
+    #model.train_on_batch(x, y)
 
-    out = model.predict(x)
     old_weights = [layer.get_weights() for layer in model.layers]
     _, fname = tempfile.mkstemp('.h5')
 
@@ -315,6 +314,9 @@ def test_loading_weights_by_name_skip_mismatch():
     with pytest.warns(UserWarning):  # expect UserWarning for skipping weights
         model.load_weights(fname, by_name=True, skip_mismatch=True)
     os.remove(fname)
+
+    for l in model.layers:
+        print(l, l.name)
 
     # assert layers 'rick' are equal
     for old, new in zip(old_weights[0], model.layers[0].get_weights()):
