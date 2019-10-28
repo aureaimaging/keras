@@ -640,9 +640,8 @@ def constant(value, dtype=None, shape=None, name=None):
     # Returns
         A Constant Tensor.
     """
-    with tf_ops.init_scope():
-        return tf_keras_backend.constant(
-            value, dtype=dtype, shape=shape, name=name)
+    return tf_keras_backend.constant(
+        value, dtype=dtype, shape=shape, name=name)
 
 
 def is_keras_tensor(x):
@@ -955,11 +954,10 @@ def zeros(shape, dtype=None, name=None):
     """
     if dtype is None:
         dtype = floatx()
-    with tf_ops.init_scope():
-        v = tf.zeros(shape=shape, dtype=dtype, name=name)
-        if py_all(v.shape.as_list()):
-            return variable(v, dtype=dtype, name=name)
-        return v
+    v = tf.zeros(shape=shape, dtype=dtype, name=name)
+    if py_all(v.shape.as_list()):
+        return variable(v, dtype=dtype, name=name)
+    return v
 
 
 def ones(shape, dtype=None, name=None):
@@ -988,11 +986,10 @@ def ones(shape, dtype=None, name=None):
     """
     if dtype is None:
         dtype = floatx()
-    with tf_ops.init_scope():
-        v = tf.ones(shape=shape, dtype=dtype, name=name)
-        if py_all(v.shape.as_list()):
-            return variable(v, dtype=dtype, name=name)
-        return v
+    v = tf.ones(shape=shape, dtype=dtype, name=name)
+    if py_all(v.shape.as_list()):
+        return variable(v, dtype=dtype, name=name)
+    return v
 
 
 def eye(size, dtype=None, name=None):
@@ -1025,8 +1022,7 @@ def eye(size, dtype=None, name=None):
         n, m = size
     else:
         n, m = size, size
-    with tf_ops.init_scope():
-        return tf.eye(n, m, dtype=dtype, name=name)
+    return tf.eye(n, m, dtype=dtype, name=name)
 
 
 @symbolic
@@ -1135,10 +1131,9 @@ def random_uniform_variable(shape, low, high,
     if seed is None:
         # ensure that randomness is conditioned by the Numpy RNG
         seed = np.random.randint(10e8)
-    with tf_ops.init_scope():
-        value = tf.random_uniform_initializer(
-            low, high, seed=seed)(shape, dtype=dtype)
-        return variable(value, dtype=dtype, name=name)
+    value = tf.random_uniform_initializer(
+        low, high, seed=seed)(shape, dtype=dtype)
+    return variable(value, dtype=dtype, name=name)
 
 
 def random_normal_variable(shape, mean, scale, dtype=None,
@@ -1173,10 +1168,9 @@ def random_normal_variable(shape, mean, scale, dtype=None,
     if seed is None:
         # ensure that randomness is conditioned by the Numpy RNG
         seed = np.random.randint(10e8)
-    with tf_ops.init_scope():
-        value = tf.random_normal_initializer(
-            mean, scale, seed=seed)(shape, dtype=dtype)
-        return variable(value, dtype=dtype, name=name)
+    value = tf.random_normal_initializer(
+        mean, scale, seed=seed)(shape, dtype=dtype)
+    return variable(value, dtype=dtype, name=name)
 
 
 def count_params(x):
@@ -4320,9 +4314,8 @@ def random_normal(shape, mean=0.0, stddev=1.0, dtype=None, seed=None):
         with get_graph().as_default():
             return tf_keras_backend.random_normal(
                 shape, mean=mean, stddev=stddev, dtype=dtype, seed=seed)
-    with tf_ops.init_scope():
-        return tf_keras_backend.random_normal(
-            shape, mean=mean, stddev=stddev, dtype=dtype, seed=seed)
+    return tf_keras_backend.random_normal(
+        shape, mean=mean, stddev=stddev, dtype=dtype, seed=seed)
 
 
 def random_uniform(shape, minval=0.0, maxval=1.0, dtype=None, seed=None):
@@ -4348,9 +4341,8 @@ def random_uniform(shape, minval=0.0, maxval=1.0, dtype=None, seed=None):
         with get_graph().as_default():
             return tf_keras_backend.random_uniform(
                 shape, minval=minval, maxval=maxval, dtype=dtype, seed=seed)
-    with tf_ops.init_scope():
-        return tf_keras_backend.random_uniform(
-            shape, minval=minval, maxval=maxval, dtype=dtype, seed=seed)
+    return tf_keras_backend.random_uniform(
+        shape, minval=minval, maxval=maxval, dtype=dtype, seed=seed)
 
 
 def random_binomial(shape, p=0.0, dtype=None, seed=None):
@@ -4373,9 +4365,8 @@ def random_binomial(shape, p=0.0, dtype=None, seed=None):
         with get_graph().as_default():
             return tf_keras_backend.random_binomial(
                 shape, p=p, dtype=dtype, seed=seed)
-    with tf_ops.init_scope():
-        return tf_keras_backend.random_binomial(
-            shape, p=p, dtype=dtype, seed=seed)
+    return tf_keras_backend.random_binomial(
+        shape, p=p, dtype=dtype, seed=seed)
 
 
 def truncated_normal(shape, mean=0.0, stddev=1.0, dtype=None, seed=None):
@@ -4404,9 +4395,8 @@ def truncated_normal(shape, mean=0.0, stddev=1.0, dtype=None, seed=None):
         with get_graph().as_default():
             return tf_keras_backend.truncated_normal(
                 shape, mean=mean, stddev=stddev, dtype=dtype, seed=seed)
-    with tf_ops.init_scope():
-        return tf_keras_backend.truncated_normal(
-            shape, mean=mean, stddev=stddev, dtype=dtype, seed=seed)
+    return tf_keras_backend.truncated_normal(
+        shape, mean=mean, stddev=stddev, dtype=dtype, seed=seed)
 
 
 # CTC
